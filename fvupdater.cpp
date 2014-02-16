@@ -291,7 +291,7 @@ void FvUpdater::startDownloadFeed(QUrl url)
 
 	QNetworkRequest request;
  	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/xml");
-//  	request.setHeader(QNetworkRequest::UserAgentHeader, QApplication::applicationName());
+ 	request.setHeader(QNetworkRequest::UserAgentHeader, QApplication::applicationName());
  	request.setUrl(url);
 
 	m_reply = m_qnam.get(request);
