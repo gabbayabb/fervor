@@ -130,7 +130,7 @@ void FvUpdater::showUpdateConfirmationDialogUpdatedWithCurrentUpdateProposal()
 	// Create a new window
 	m_updateConfirmationDialog = new FvUpdateConfirmDialog();
 	m_updateConfirmationDialog->UpdateWindowWithCurrentProposedUpdate();
-	m_updateConfirmationDialog->show();
+    m_updateConfirmationDialog->exec();
 }
 
 void FvUpdater::hideUpdateConfirmationDialog()
