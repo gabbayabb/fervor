@@ -8,7 +8,7 @@
 
 
 FvUpdateWindow::FvUpdateWindow(QWidget *parent) :
-	QWidget(parent),
+    QDialog(parent),
 	m_ui(new Ui::FvUpdateWindow)
 {
 	m_ui->setupUi(this);

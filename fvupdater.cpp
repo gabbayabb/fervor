@@ -99,7 +99,7 @@ void FvUpdater::showUpdaterWindowUpdatedWithCurrentUpdateProposal()
 	// Create a new window
 	m_updaterWindow = new FvUpdateWindow();
 	m_updaterWindow->UpdateWindowWithCurrentProposedUpdate();
-	m_updaterWindow->show();
+    m_updaterWindow->exec();
 }
 
 void FvUpdater::hideUpdaterWindow()

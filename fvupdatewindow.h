@@ -1,14 +1,14 @@
 #ifndef FVUPDATEWINDOW_H
 #define FVUPDATEWINDOW_H
 
-#include <QWidget>
+#include <QDialog>
 class QGraphicsScene;
 
 namespace Ui {
 class FvUpdateWindow;
 }
 
-class FvUpdateWindow : public QWidget
+class FvUpdateWindow : public QDialog
 {
 	Q_OBJECT
 	
