@@ -17,6 +17,16 @@ class FvUpdater : public QObject
 
 public:
 
+    // Info / warning / error message levels presented to the user
+    enum MsgLevel {
+        MsgLevelDebug,
+        MsgLevelInfo,
+        MsgLevelWarning,
+        MsgLevelError,
+        MsgLevelNone,
+        MsgLevelReserved
+    };
+
 	// Singleton
 	static FvUpdater* sharedUpdater();
 	static void drop();
@@ -25,6 +35,10 @@ public:
 	void SetFeedURL(QUrl feedURL);
 	void SetFeedURL(QString feedURL);
 	QString GetFeedURL();
+
+    // Overrides the aggressivity of presenting info / warning / error messages to the user
+    // If not set, the default behavior is warning in silent mode, info in non-silent mode
+    void SetUserNotificationLevel(MsgLevel msgLevel);
 
 public slots:
 
@@ -44,12 +58,6 @@ public slots:
 	//
 
 protected:
-
-  enum msgType {
-    INFO_MESSAGE,         // shown always for users
-    NO_UPDATE_MESSAGE,    // shown message only in not-silent mode, but modified
-    CRITICAL_MESSAGE      // shown always
-  };
 
 	friend class FvUpdateWindow;		// Uses GetProposedUpdate() and others
 	friend class FvUpdateConfirmDialog;	// Uses GetProposedUpdate() and others
@@ -102,11 +110,10 @@ private:
 	// (silentAsMuchAsItCouldGet from CheckForUpdates() goes here)
 	// Useful for automatic update checking upon application startup.
 	bool m_silentAsMuchAsItCouldGet;
+    MsgLevel m_userNotificationLevel;
 
-	// Dialogs (notifications)
-	void showErrorDialog(QString message, msgType type = NO_UPDATE_MESSAGE);			// Show an error message
-	void showInformationDialog(QString message, bool showEvenInSilentMode = false);		// Show an informational message
-
+    // Dialogs (notifications)
+    void showInfoDialog(QString message, MsgLevel msgLevel);			// Shows or not messages depends on message level
 
 	//
 	// HTTP feed fetcher infrastructure
