@@ -413,13 +413,13 @@ bool FvUpdater::xmlParseFeed()
 
                         // First check for Sparkle's version, then overwrite with Fervor's version (if any)
                         if (attribs.hasAttribute("sparkle:version")) {
-                            QString candidateVersion = attribs.value("sparkle:version").toString().trimmed();
+                            QString candidateVersion = attribs.value("sparkle:version").toString();
                             if (! candidateVersion.isEmpty()) {
                                 xmlEnclosureVersion = candidateVersion;
                             }
                         }
                         if (attribs.hasAttribute("fervor:version")) {
-                            QString candidateVersion = attribs.value("fervor:version").toString().trimmed();
+                            QString candidateVersion = attribs.value("fervor:version").toString();
                             if (! candidateVersion.isEmpty()) {
                                 xmlEnclosureVersion = candidateVersion;
                             }
