@@ -10,9 +10,6 @@
 //
 //	Copyright 2007 Andy Matuschak. All rights reserved.
 //
-// Everything's the same except for TypeOfCharacter()
-// (because who knows how Foundation does isdigit() and such.)
-//
 
 
 FvVersionComparator::FvVersionComparator()
@@ -33,7 +30,6 @@ FvVersionComparator::CharacterType FvVersionComparator::TypeOfCharacter(std::str
 	} else {
 		return kStringType;
 	}
-
 }
 
 std::vector<std::string> FvVersionComparator::SplitVersionString(std::string version)
@@ -76,6 +72,8 @@ std::vector<std::string> FvVersionComparator::SplitVersionString(std::string ver
 FvVersionComparator::ComparatorResult FvVersionComparator::CompareVersions(std::string versionA,
 																		   std::string versionB)
 {
+    if (versionA == versionB) return kSame;
+
 	std::vector<std::string> partsA = SplitVersionString(versionA);
 	std::vector<std::string> partsB = SplitVersionString(versionB);
 
@@ -132,34 +130,10 @@ FvVersionComparator::ComparatorResult FvVersionComparator::CompareVersions(std::
 	}
 	// The versions are equal up to the point where they both still have parts
 	// Lets check to see if one is larger than the other
-	if (partsA.size() != partsB.size()) {
-		// Yep. Lets get the next part of the larger
-		// n holds the index of the part we want.
-		std::string missingPart = std::string("");
-		CharacterType missingType;
-		ComparatorResult shorterResult, largerResult;
 
-		if (partsA.size() > partsB.size()) {
-			missingPart = partsA.at(n);
-			shorterResult = kAscending;
-			largerResult = kDescending;
-		} else {
-			missingPart = partsB.at(n);
-			shorterResult = kDescending;
-			largerResult = kAscending;
-		}
-
-		missingType = TypeOfCharacter(missingPart);
-		// Check the type
-		if (missingType == kStringType) {
-			// It's a string. Shorter version wins
-			return shorterResult;
-		} else {
-			// It's a number/period. Larger version wins
-			return largerResult;
-		}
-	}
-
-	// The 2 strings are identical
-	return kSame;
+    // TODO: write a correct semantic versioning compatible comparator
+    // Note: fervor currently assumes that the analyzed <item>'s version is the most recent one.
+    // This actually means it's enough to make a single string equality comparison.
+    // If they aren't equal (currently they not), there is a new version.
+    return kAscending;
 }
